@@ -10,7 +10,7 @@ model file under its original name, effectively compacting its size.
 # Dependencies                         #
 ########################################
 import sys
-sys.path.append('../../')
+# sys.path.append('../../')
 import mph
 import numpy as np
 import yaml
@@ -21,21 +21,11 @@ import sim_util
 ########################################
 # Main                                 #
 ########################################
-
 # Display welcome message.
 print('Compacting Comsol models in the current folder.')
-
 # Start Comsol client.
 print('Running Comsol client on single processor core.')
-
-
 client = mph.start(cores=1)
-# {'Lambda': '1[W/(K*m)]', 'p': '1000[kg/m^3]', 'c': '2000[J/(kg*K)]',
-# 'sizez': '10[mm]', 'px': '5[mm]', 'py': '5[mm]',
-# 'sizex': '10[mm]', 'sizey': '10[mm]',
-# 'T1': '313.15[K]', 'T0': '293.15[K]',
-# 'time': '60'}
-
 
 class parameter_control():
 
@@ -87,9 +77,7 @@ def create_folder(name, num_min, num_max, path):
         print(f"Folder created at: {full_path+ '/'+name[0:name.find('.')]}")
     else:
         print(f"Folder already exists at: {full_path+ '/'+name[0:name.find('.')]}")
-
     full_path = full_path+'/'+name[0:name.find('.')]
-    param = parameter_control()
     print(f'{name}:')
     timer.start('Loading')
     try:
@@ -97,7 +85,6 @@ def create_folder(name, num_min, num_max, path):
         timer.stop()
     except Exception:
         timer.cancel('Failed.')
-
     print(client.names())
     # print(model.parameters())
     # print(model.materials())
@@ -106,8 +93,8 @@ def create_folder(name, num_min, num_max, path):
     print(model.geometries())
     # print(model.mesh())
 
+    param = parameter_control()
     series = param.generate_series()
-
     assert num2 <= series.__len__() or num2 == -1
     if num2 == -1:
         num2 = series.__len__()
@@ -119,22 +106,16 @@ def create_folder(name, num_min, num_max, path):
         print(f'{sim_util.X_2(series[i][s1])}[W/(K*m)]')
         print(f'{series[i][s2]}[kg/m^3]')
         print(f'{series[i][s3]}[J/(kg*K)]')
-
         timer.start(f'Computing{num}')
-
         model.parameter('Lambda', f'{sim_util.X_2(series[i][s1])}[W/(K*m)]')
         model.parameter('p', f'{series[i][s2]}[kg/m^3]')
         model.parameter('c', f'{series[i][s3]}[J/(kg*K)]')
-
         model.solve()
         timer.stop()
-
         timer.start('Saving')
-
         log_name = f"{num}"
         model.export('vid', f'{full_path}/{log_name}_video.gif')
         model.export('csv_data', f'{full_path}/{log_name}_mph.txt')
-
         # Define your parameters
         parameters_yaml = {
             'mph_name': name,
@@ -152,7 +133,6 @@ def create_folder(name, num_min, num_max, path):
         }
         # Serialize the parameters into a YAML string
         yaml_str = yaml.dump(parameters_yaml)
-
         # Save the YAML string to a file
         file = open(f'{full_path}/{log_name}_parameters.yaml', 'w')
         file.write(yaml_str)
@@ -164,9 +144,7 @@ def create_folder(name, num_min, num_max, path):
         loaded_parameters = yaml.safe_load(file)
         print(loaded_parameters)
         file.close()
-
         num = num + 1
-
     model.save()
 
 
@@ -179,5 +157,4 @@ if __name__ == '__main__':
     parser.add_argument("--path", type=str, default= './output', help="The path where the folder will be created")
 
     args = parser.parse_args()
-
     create_folder(args.mph, args.min, args.max, args.path)
