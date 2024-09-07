@@ -62,7 +62,7 @@ class parameter_control():
                     temp['Lambda'] = self.Lambda[i1]
                     temp['p'] = self.p[i2]
                     temp['c'] = self.c[i3]
-            series.append(temp)
+                    series.append(temp)
         return series
 
 
@@ -95,6 +95,8 @@ def create_folder(name, num_min, num_max, path):
 
     param = parameter_control()
     series = param.generate_series()
+    print(num2, series.__len__()+1)
+
     assert num2 <= (series.__len__()+1) or num2 == -1
     if num2 == -1:
         num2 = series.__len__()+1
