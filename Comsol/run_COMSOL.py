@@ -105,11 +105,11 @@ def create_folder(name, num_min, num_max, path):
         s1 = 'Lambda'
         s2 = 'p'
         s3 = 'c'
-        print(f'{sim_util.X_2(series[i][s1])}[W/(K*m)]')
+        print(f'{series[i][s1]}[W/(K*m)]')
         print(f'{series[i][s2]}[kg/m^3]')
         print(f'{series[i][s3]}[J/(kg*K)]')
         timer.start(f'Computing{num}')
-        model.parameter('Lambda', f'{sim_util.X_2(series[i][s1])}[W/(K*m)]')
+        model.parameter('Lambda', f'{series[i][s1]}[W/(K*m)]')
         model.parameter('p', f'{series[i][s2]}[kg/m^3]')
         model.parameter('c', f'{series[i][s3]}[J/(kg*K)]')
         model.solve()
@@ -121,7 +121,7 @@ def create_folder(name, num_min, num_max, path):
         # Define your parameters
         parameters_yaml = {
             'mph_name': name,
-            'Lambda': float(sim_util.X_2(series[i][s1])),
+            'Lambda': float(series[i][s1]),
             'p': float(series[i][s2]),
             'c': float(series[i][s3]),
             'px': 0,

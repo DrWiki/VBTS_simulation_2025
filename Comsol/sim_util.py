@@ -29,7 +29,7 @@ class Timer():
         print(f'{elapsed:.1f} seconds', flush=True)
 
 def X_2(x):
-    return x*x/200
+    return x*x
 
 def degree_K(c):
     return c+273.15
