@@ -95,9 +95,9 @@ def create_folder(name, num_min, num_max, path):
 
     param = parameter_control()
     series = param.generate_series()
-    assert num2 <= series.__len__() or num2 == -1
+    assert num2 <= (series.__len__()+1) or num2 == -1
     if num2 == -1:
-        num2 = series.__len__()
+        num2 = series.__len__()+1
 
     for i in range(num, num2, 1):
         s1 = 'Lambda'
