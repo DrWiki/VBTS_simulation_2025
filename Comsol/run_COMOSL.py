@@ -10,7 +10,7 @@ model file under its original name, effectively compacting its size.
 # Dependencies                         #
 ########################################
 import sys
-sys.path.append('../')
+sys.path.append('../../')
 import mph
 import numpy as np
 import yaml
@@ -41,9 +41,9 @@ class parameter_control():
 
     def __init__(self):
         # self.Lambda = list(np.linspace(2, 200, 20))
-        self.Lambda = [0.1,0.2,0.3,0.4,0.7,1,3,5,10,50,100,200]
-        self.p = list(np.linspace(800, 10000, 20))
-        self.c = list(np.linspace(800, 4000, 20))
+        self.Lambda = [0.1,0.5,1,10,20,50,100]
+        self.p = [8000]
+        self.c = [400]
         # self.px = list(np.linspace(-20, +20, 10))
         # self.py = list(np.linspace(-20, +20, 10))
 
@@ -57,21 +57,21 @@ class parameter_control():
         # self.T1 = list(np.linspace(degree_K(), 300, 50))
         # self.T0 = list(np.linspace(0, 300, 50))
 
-        self.T1 = [sim_util.degree_K(40)]
-        self.T0 = [sim_util.degree_K(20)]
+        self.T1 = [sim_util.degree_K(15)]
+        self.T0 = [sim_util.degree_K(25)]
 
         # self.time = list(np.linspace(5, 40, 10))
         self.time = [5]
 
     def generate_series(self):
         series = []
-        # for i2 in range(self.p.__len__()):
-        #     for i3 in range(self.c.__len__()):
-        for i1 in range(self.Lambda.__len__()):
-            temp = {}
-            temp['Lambda'] = self.Lambda[i1]
-            # temp['p'] = self.p[i2]
-            # temp['c'] = self.c[i3]
+        for i2 in range(self.p.__len__()):
+            for i3 in range(self.c.__len__()):
+                for i1 in range(self.Lambda.__len__()):
+                    temp = {}
+                    temp['Lambda'] = self.Lambda[i1]
+                    temp['p'] = self.p[i2]
+                    temp['c'] = self.c[i3]
             series.append(temp)
         return series
 
