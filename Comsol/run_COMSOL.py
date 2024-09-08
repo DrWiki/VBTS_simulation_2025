@@ -9,10 +9,8 @@ model file under its original name, effectively compacting its size.
 ########################################
 # Dependencies                         #
 ########################################
-import sys
 # sys.path.append('../../')
-import mph
-import numpy as np
+from unused import mph
 import yaml
 import argparse
 import os
