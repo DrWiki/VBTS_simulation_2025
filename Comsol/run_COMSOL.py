@@ -84,12 +84,12 @@ def create_folder(name, num_min, num_max, path):
     except Exception:
         timer.cancel('Failed.')
     print(client.names())
-    # print(model.parameters())
-    # print(model.materials())
-    # print(model.physics())
+    print(model.parameters())
+    print(model.materials())
+    print(model.physics())
     print(model.studies())
     print(model.geometries())
-    # print(model.mesh())
+    print(model.mesh())
 
     param = parameter_control()
     series = param.generate_series()
